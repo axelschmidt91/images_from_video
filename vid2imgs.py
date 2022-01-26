@@ -20,7 +20,7 @@ def extraction(vidFile, numImages, outFolder):
         if not count % savingInterval:
             imageName = f"frame{count:06}.jpg"
             logging.info(f"Write image {imageName}")
-            cv2.imwrite(os.path.join(outFolder, imageName), image)     # save frame as JPEG file      
+            cv2.imwrite(os.path.join(outFolder, imageName), image)     # save frame as JPEG file
         success, image = cap.read()
         logging.debug('Read a new frame: ', success)
         count += 1
