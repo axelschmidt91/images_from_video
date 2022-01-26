@@ -15,15 +15,19 @@ def extraction(vidFile, numImages, outFolder):
 
     success, image = cap.read()
     count = 0
+    imageCount = 0
 
     while success:
         if not count % savingInterval:
             imageName = f"frame{count:06}.jpg"
             logging.info(f"Write image {imageName}")
             cv2.imwrite(os.path.join(outFolder, imageName), image)     # save frame as JPEG file
+            imageCount += 1
         success, image = cap.read()
         logging.debug('Read a new frame: ', success)
         count += 1
+
+    logging.info(f"Number of images saved: {imageCount}")
 
 
 if __name__ == "__main__":
@@ -102,5 +106,5 @@ if __name__ == "__main__":
             for f in os.listdir(imagePath):
                 os.remove(os.path.join(imagePath, f))
 
-        logging.info(f"Start extracting {numImages} imges for video {file}")
+        logging.info(f"Start extracting minimum of {numImages} images for video {file}")
         extraction(file, numImages, imagePath)
