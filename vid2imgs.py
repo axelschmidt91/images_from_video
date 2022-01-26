@@ -34,7 +34,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "file",
         nargs="+",
-        help="folder to search for files")
+        help="video file to extract imags from. Several ones can be processed in one call.")
     parser.add_argument(
         "-nI",
         type=int,
