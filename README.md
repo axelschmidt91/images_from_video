@@ -10,7 +10,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-refering to the cli help provided by argparse, open help:
+Refering to the cli help provided by argparse, open help:
 ```
-python vid2imags -h
+python vid2imgs -h
 ```
