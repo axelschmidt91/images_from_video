@@ -9,7 +9,7 @@ def extraction(vidFile, numImages, outFolder):
 
     """ get total frame count and saving interval for images"""
     # framesPerSecond= int(cap.get(cv2.CAP_PROP_FPS))
-    frameCount = cap.cv2.CAP_PROP_FRAME_COUNT
+    frameCount = cap.get(cv2.CAP_PROP_FRAME_COUNT)
     savingInterval = int(frameCount / numImages)
     logging.info(f"Saving interval is {savingInterval} frames")
 
@@ -18,9 +18,9 @@ def extraction(vidFile, numImages, outFolder):
 
     while success:
         if not count % savingInterval:
-            imageName = f"frame{count:03}.jpg"
+            imageName = f"frame{count:06}.jpg"
             logging.info(f"Write image {imageName}")
-            cv2.imwrite(imageName, image)     # save frame as JPEG file      
+            cv2.imwrite(os.path.join(outFolder, imageName), image)     # save frame as JPEG file      
         success, image = cap.read()
         logging.debug('Read a new frame: ', success)
         count += 1
@@ -68,9 +68,9 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-    files = args.files
+    files = args.file
     numImages = args.numImages
-    deletImages = args.delImages
+    deletImages = args.deletImages
 
     # Set up logging
     if not os.path.isdir('log'):
@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
         path, fileName = os.path.split(file)
 
-        imageFolderName = f"images_{fileName.split(".")[0]}"
+        imageFolderName = f"images_{fileName.split('.')[0]}"
         imagePath = os.path.join(path, imageFolderName)
 
         if not os.path.isdir(imagePath):
@@ -102,4 +102,5 @@ if __name__ == "__main__":
             for f in os.listdir(imagePath):
                 os.remove(os.path.join(imagePath, f))
 
+        logging.info(f"Start extracting {numImages} imges for video {file}")
         extraction(file, numImages, imagePath)
